@@ -5,40 +5,49 @@ library(ggplot2)
 library(pheatmap)
 library(EnhancedVolcano)
 library(here)
+library(tidyverse)
 
+setwd("C:/*/*/*/GitHub/differential-gene-expression-analysis/")
   
 # loading raw data
-raw <- read.csv("C:/***/***/***/gene expression analysis/GSE306199_raw_counts_24hr.csv.gz")
+raw <- read.csv("C:/*/*/*/GSE306199_raw_counts_24hr.csv.gz")
 countData <- raw[, -1]
 rownames(countData) <- raw[, 1]
-write.csv(countData, "C:/***/***/***/gene-expression-analysis/data/count_matrix.csv")
+write.csv(countData, "C:/*/*/*/GitHub/differential-gene-expression-analysis/data/count_matrix.csv")
 
 # sample metadata
 colData <- data.frame(
   row.names = colnames(countData),
   infection = factor(rep(c('Infected', 'Uninfected'), each = 10)),
-  treatment = factor(rep(c('Dillapiole', 'Vehicle'), times = 2, each = 5))
-)
-write.csv(colData, "C:/***/***/***/gene-expression-analysis/data/sample_metadata.csv")
+  treatment = factor(rep(c('Dillapiole', 'Vehicle'), times = 2, each = 5)))
+
+write.csv(colData, "C:/*/*/*/GitHub/differential-gene-expression-analysis/data/sample_data.csv")
 
 # testing if row names and column names(samples) match
 all(colnames(countData) %in% rownames(colData))
 all(colnames(countData) == rownames(colData))
 
 #reference levels
-colData$infection <- relevel(colData$infection, ref = 'Uninfected')
-colData$treatment <- relevel(colData$treatment, ref = 'Vehicle')
-colData$group <- factor(paste(colData$infection, colData$treatment, sep = '_'))
+colData <- colData %>%
+  mutate(infection = relevel(infection, ref = 'Uninfected')) %>%
+  mutate(treatment = relevel(treatment, ref = 'Vehicle')) %>%
+  mutate(group = factor(paste(infection, treatment, sep = '_'),
+         levels = c('Uninfected_Vehicle',
+                    'Uninfected_Dillapiole',
+                    'Infected_Vehicle',
+                    'Infected_Dillapiole')))
 
-  
+
+
+
 # DESeq2 object and basic filtering
 dds <- DESeqDataSetFromMatrix(countData = countData, 
                        colData = colData,
                        design = ~ group)
 
-
 keeps <- rowSums(counts(dds)) >= 10
 dds <- dds[keeps, ]
+
 
 # the actual differential gene expression analysis
 dds <- DESeq(dds)
@@ -83,20 +92,21 @@ res_dillapiole <- results(dds, contrast = c('group', 'Infected_Dillapiole', 'Uni
 res_uninf <- results(dds, contrast = c('group', 'Uninfected_Dillapiole', 'Uninfected_Vehicle'))
 res_inf <- results(dds, contrast = c('group', 'Infected_Dillapiole', 'Infected_Vehicle'))
 
-write.csv(as.data.frame(res_vehicle), 'infection_vehicle_all.csv', row.names = TRUE)
-write.csv(as.data.frame(res_dillapiole), 'infection_dillapiole_all.csv', row.names = TRUE)
+write.csv(as.data.frame(res_vehicle), 'infected_vehicle_all.csv', row.names = TRUE)
+write.csv(as.data.frame(res_dillapiole), 'infected_dillapiole_all.csv', row.names = TRUE)
 write.csv(as.data.frame(res_uninf), 'treatment_uninfected_all.csv', row.names = TRUE)
 write.csv(as.data.frame(res_inf), 'treatment_infected_all.csv', row.names = TRUE)
 
 
 # significant changes
 sig_vehicle <- subset(as.data.frame(res_vehicle), padj < 0.05 & abs(log2FoldChange) > 1)
-sig_dillapiole    <- subset(as.data.frame(res_dillapiole),    padj < 0.05 & abs(log2FoldChange) > 1)
-sig_uninf   <- subset(as.data.frame(res_uninf),   padj < 0.05 & abs(log2FoldChange) > 1)
-sig_inf     <- subset(as.data.frame(res_inf),     padj < 0.05 & abs(log2FoldChange) > 1)
+sig_dillapiole <- subset(as.data.frame(res_dillapiole), padj < 0.05 & abs(log2FoldChange) > 1)
+sig_uninf <- subset(as.data.frame(res_uninf), padj < 0.05 & abs(log2FoldChange) > 1)
+sig_inf <- subset(as.data.frame(res_inf), padj < 0.05 & abs(log2FoldChange) > 1)
 
-write.csv(sig_vehicle, 'infection_vehicle_sig.csv', row.names = TRUE)
-write.csv(sig_dillapiole, 'infection_dillapiole_sig.csv', row.names = TRUE)
+
+write.csv(sig_vehicle, 'infected_vehicle_sig.csv', row.names = TRUE)
+write.csv(sig_dillapiole, 'infected_dillapiole_sig.csv', row.names = TRUE)
 write.csv(sig_uninf, 'treatment_uninfected_sig.csv', row.names = TRUE)
 write.csv(sig_inf, 'treatment_infected_sig.csv' , row.names = TRUE)
 
@@ -104,11 +114,21 @@ write.csv(sig_inf, 'treatment_infected_sig.csv' , row.names = TRUE)
 
 
 # MA plots 
-plotMA(res_vehicle, 'MA Plot: Infected vs Uninfected (Vehicle)', 'infected_vs_uninfected_vehicle_MA.png')
-plotMA(res_dillapiole, 'MA Plot: Infected vs Uninfected (Dillapiole)', 'infected_vs_uninfected_dillapiole_MA.png')
-plotMA(res_uninf, 'MA Plot: Dillapiole vs Vehicle (Uninfected)', 'dillapiole_vs_vehicle_uninfected_MA.png')
-plotMA(res_inf, 'MA Plot: Dillapiole vs Vehicle (Infected)', 'dillapiole_vs_vehicle_infected_MA.png')
+png(here('infected_vs_uninfected_vehicle_MA.png'), width = 800, height = 600)
+plotMA(res_vehicle, main = 'MA Plot: Infected vs Uninfected (Vehicle)')
+dev.off()
 
+png(here('infected_vs_uninfected_dillapiole_MA.png'), width = 800, height = 600)
+plotMA(res_dillapiole, main = 'MA Plot: Infected vs Uninfected (Dillapiole)')
+dev.off()
+
+png(here('dillapiole_vs_vehicle_uninfected_MA.png'), width = 800, height = 600)
+plotMA(res_uninf, main = 'MA Plot: Dillapiole vs Vehicle (Uninfected)')
+dev.off()
+
+png(here('dillapiole_vs_vehicle_infected_MA.png'), width = 800, height = 600)
+plotMA(res_inf, main = 'MA Plot: Dillapiole vs Vehicle (Infected)')
+dev.off()
 
 
 
@@ -155,7 +175,7 @@ ggsave('dillapiole_vs_vehicle_infected_volcano.png', width = 9, height = 7)
 # Heatmaps for top DE genes
 top10_heatmap <- function(sig_res, title, filename) {
   if (is.null(sig_res) || nrow(sig_res) == 0) {
-    cat("No sig genes for", title, "\n")
+    cat('No sig genes for', title, "\n")
     return(invisible(NULL))
   }
   
@@ -165,7 +185,7 @@ top10_heatmap <- function(sig_res, title, filename) {
   genes <- c(up, down)
   
   if (length(genes) < 2) {
-    cat("Too few genes for", title, "\n")
+    cat('Too few genes for', title, "\n")
     return(invisible(NULL))
   }
   
@@ -174,7 +194,7 @@ top10_heatmap <- function(sig_res, title, filename) {
            show_rownames = TRUE,
            fontsize_row = 8,
            main = title,
-           filename = here::here("results", filename),   # یا here("results", filename) اگه library(here) لود کردی
+           filename = here::here('results', filename),
            width = 10,
            height = 8)
 }
