@@ -173,38 +173,38 @@ ggsave('dillapiole_vs_vehicle_infected_volcano.png', width = 9, height = 7)
 
 
 # Heatmaps for top DE genes
-top10_heatmap <- function(sig_res, title, filename) {
+top10_heatmap <- function(sig_res, title, filename, keep_samples) {
+  
   if (is.null(sig_res) || nrow(sig_res) == 0) {
-    cat('No sig genes for', title, "\n")
+    cat("No significant genes for", title, "\n")
     return(invisible(NULL))
   }
   
   up   <- head(rownames(sig_res[order(sig_res$log2FoldChange, decreasing = TRUE), ]), 10)
   down <- head(rownames(sig_res[order(sig_res$log2FoldChange), ]), 10)
+  genes <- unique(c(up, down))
   
-  genes <- c(up, down)
+  keep <- keep_samples(colData(vsd))
   
-  if (length(genes) < 2) {
-    cat('Too few genes for', title, "\n")
-    return(invisible(NULL))
-  }
+  mat <- assay(vsd)[genes, keep]
+  ann_sub <- ann[keep, , drop = FALSE]
   
-  pheatmap(assay(vsd)[genes, ],
-           annotation_col = ann,
-           show_rownames = TRUE,
-           fontsize_row = 8,
-           main = title,
-           filename = here::here('results', filename),
-           width = 10,
-           height = 8)
+  pheatmap(
+    mat,
+    annotation_col = ann_sub,
+    show_rownames = TRUE,
+    fontsize_row = 8,
+    main = title,
+    filename = filename,
+    width = 10,
+    height = 8
+  )
 }
 
-
-top10_heatmap(sig_vehicle, 'Top 10 DE Genes - Inf and Uninf (Vehicle)', 'infected_vs_uninfected_vehicle_heatmap.png')
-top10_heatmap(sig_dillapiole, 'Top 10 DE Genes - Inf and Uninf (Dillapiole)', 'infected_vs_uninfected_dillapiole_heatmap.png')
-top10_heatmap(sig_uninf, 'Top 10 DE Genes - Treatment Effect (Uninfected)', 'dillapiole_vs_vehicle_uninfected_heatmap.png')  
-top10_heatmap(sig_inf, 'Top 10 DE Genes - Treatment Effect (Infected)', 'dillapiole_vs_vehicle_infected_heatmap.png') 
-
+top10_heatmap(sig_vehicle, "Vehicle: Infected vs Uninfected", "vehicle_infected_vs_uninfected.png", function(cd) cd$treatment == "Vehicle")
+top10_heatmap(sig_dillapiole, "Top 10 DE Genes,Inf and Uninf (Dillapiole)", "infected_vs_uninfected_dillapiole_heatmap.png", function(cd) cd$treatment == "Dillapiole")
+top10_heatmap(sig_uninf, "Top 10 DE Genes,Treatment Effect (Uninfected)", "dillapiole_vs_vehicle_uninfected_heatmap.png", function(cd) cd$infection == "Uninfected")
+top10_heatmap(sig_inf, "Top 10 DE Genes, Treatment Effect (Infected)", "dillapiole_vs_vehicle_infected_heatmap.png", function(cd) cd$infection == "Infected")
 
 
 
