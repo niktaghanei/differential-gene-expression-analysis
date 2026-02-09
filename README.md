@@ -18,7 +18,7 @@ The RNA-seq dataset used in this project was obtained from the NCBI Gene Express
 - Infected vs Uninfected
 - Treated with Dillapiole vs Vehicle control
 
-This results in four experimental groups:
+This results in four experimental groups (n=5 per group):
 - Uninfected + Vehicle
 - Uninfected + Dillapiole
 - Infected + Vehicle
