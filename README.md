@@ -42,5 +42,13 @@ Lowly expressed genes were filtered out by removing genes with fewer than 10 tot
 Differential expression analysis was performed using DESeq2, followed by variance stabilizing transformation (VST) for downstream visualization and exploratory analysis.
 
 # Plot analysis
+**Scatter plot** 
 
+The dispersion plot shows the expected strong negative relationship between mean normalized counts and dispersion estimates, which is characteristic of well-behaved RNA-seq data under the negative binomial model.
+Genes with low mean expression (left side of the plot) exhibit high dispersion (overdispersion), resulting in greater scatter of the gene-wise estimates (black points). As mean expression increases (moving right), dispersion decreases markedly, reflecting lower relative variability in highly expressed genes.
+The fitted dispersion trend (red line) captures this relationship well, passing centrally through the cloud of points across the entire expression range.
+Final shrunk dispersion estimates (blue points) closely follow the fitted trend, indicating appropriate and effective shrinkage, particularly beneficial for low-count genes where raw estimates are noisy. No severe dispersion outliers are apparent, suggesting the absence of major technical artifacts, contamination, or genes with unexplained extreme variability.
+Overall, the dispersion estimation appears reliable, supporting confidence in the subsequent differential expression results (p-values and log2 fold changes). 
+
+![Scatter plot](plots/dispersion_plot.png)
 
