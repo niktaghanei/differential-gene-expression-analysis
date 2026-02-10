@@ -41,3 +41,6 @@ Lowly expressed genes were filtered out by removing genes with fewer than 10 tot
 
 Differential expression analysis was performed using DESeq2, followed by variance stabilizing transformation (VST) for downstream visualization and exploratory analysis.
 
+# Plot analysis
+
+
