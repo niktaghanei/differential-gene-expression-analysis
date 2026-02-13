@@ -73,7 +73,7 @@ PC1 and PC2 explain **53%** and **27%** of the total variance, respectively. Tog
 
 The MA plot visualizes the relationship between mean normalized expression (baseMean, x-axis) and log2 fold change (y-axis) for the contrast Infected_Vehicle vs Uninfected_Vehicle, using shrunk log2 fold changes.
 
-MA Plot: Infected vs Uninfected (Vehicle)
+**MA Plot: Infected vs Uninfected (Vehicle)**
 Key observations:
 - Most genes cluster tightly around log2FC = 0 (gray band), as expected: the majority of genes do not show substantial expression changes under infection, reflecting stable housekeeping and baseline functions.
 - A clear subset of genes exhibits strong differential expression, with log2FC values ranging up to ~+7 (upregulation) and down to ~-4 (downregulation). These extremes are biologically plausible in the context of a robust innate immune response to *Francisella tularensis* infection in THP-1 cells, where activation of inflammatory and antiviral pathways (such as NF-κB, cytokine, and interferon signaling) can drive large fold changes in key effector genes.
@@ -99,7 +99,7 @@ This pattern aligns with expectations for a strong biological perturbation (infe
 
 
 
-MA Plot: Infected vs Uninfected (Dillapiole)
+**MA Plot: Infected vs Uninfected (Dillapiole)**
 
 Key observations:
 Most genes cluster around log2FC = 0 (gray band), as expected for the majority of the transcriptome that remains stable. The y-axis range [-8, 10] was chosen to fully capture the observed extremes while maintaining clear visibility of all points and patterns.
@@ -115,3 +115,92 @@ Compared to the Vehicle condition, this plot shows:
 This suggests dillapiole may lead to a more widespread or slightly amplified transcriptional response during infection, rather than suppressing changes. Biologically, this could reflect dillapiole's known role in dampening bacterial virulence gene expression, resulting in a less aggressive infection and a broader host response (activation of more diverse immune/inflammatory pathways).  
 
 ![MA plot, Dillapiole](https://github.com/niktaghanei/differential-gene-expression-analysis/blob/main/plots/ma%20plots/dillapiole_MA_edited.png)
+
+
+
+
+
+
+
+
+
+
+
+**MA Plot: Dillapiole vs Vehicle (Uninfected)**
+
+This plot shows the direct/baseline effect of dillapiole treatment on uninfected THP-1 cells.
+
+- Classic mean-variance trend: high scatter at low expression (left), tight fold changes at high expression (right)
+- y-range [-10, 8] captures all observed changes, with some genes showing strong regulation (fold changes up to ~1000×).
+- Density near log2FC = 0 is moderate. Dillapiole perturbs a noticeable fraction of the transcriptome even in the absence of infection.
+
+**Comparison: Uninfected vs Vehicle MA Plots** 
+
+To distinguish between dillapiole's direct effect on host cells and its potential modulation of the infection response, I compare:
+- Infected + Dillapiole vs Infected + Vehicle (treatment effect during infection)
+- Uninfected + Dillapiole vs Uninfected + Vehicle (baseline treatment effect without infection)
+
+Key differences:
+- **Downregulation stronger in Uninfected**: More genes and larger negative log2FC in the Uninfected plot, indicating dillapiole alone suppresses a broader portion of the transcriptome in uninfected cells.
+- **Fewer unaffected genes in Uninfected**: Reduced density near log2FC = 0 (gray band) in Uninfected compared to Vehicle, showing dillapiole perturbs more genes even without infection.
+- **Upregulation more dispersed in Vehicle**: Infected cells without treatment show wider spread in positive log2FC, consistent with robust activation of immune/inflammatory pathways.
+- **Downregulation more clustered near zero in Vehicle**: Limited and weaker downregulation during pure infection, typical of innate immune activation focused on upregulation rather than suppression.
+
+**Interpretation**:
+Dillapiole exerts a predominantly suppressive effect on uninfected THP-1 cells, while infection drives widespread upregulation with minimal downregulation. These contrasting patterns suggest dillapiole does not simply mimic or add to the infection response; its presence during infection likely modulates the host transcriptome in a way that differs from its baseline action.
+
+**Comparison: Uninfected vs Infected MA Plots**
+
+Key differences:
+- Much higher density of unaffected genes (gray band near log2FC = 0) in the Infected plot, fewer genes overall show significant changes during infection + dillapiole.
+- Upregulation in Uninfected reaches higher extremes (up to ~+7) with greater dispersion, especially among low-expression genes (left side); in Infected, upregulation is weaker (max ~+5) and more focused on high-expression genes (right side).
+- Downregulation in Uninfected is stronger among high-expression genes (right side); in Infected, it shifts toward low-expression genes (left side) with reduced overall spread.
+
+**Interpretation**:
+Dillapiole alone induces broad changes in uninfected cells, with strong upregulation in low-expression genes and downregulation in high-expression genes. During infection, its effect becomes more limited: fewer genes are perturbed, upregulation is attenuated and shifts to high-expression genes, and downregulation focuses on low-expression genes. This suggests dillapiole modulates the host response during infection (likely by dampening bacterial virulence) leading to a less widespread and more balanced transcriptional reaction compared to its baseline action on uninfected cells. 
+
+![MA Plot, Uninfected](https://github.com/niktaghanei/differential-gene-expression-analysis/blob/main/plots/ma%20plots/uninfected_MA_edited.png) 
+
+
+
+
+
+
+
+
+
+
+
+**MA Plot: Infected (Infected + Vehicle vs Infected + Dillapiole)**
+
+This MA plot shows shrunk log2 fold changes (y-axis) against mean normalized counts (baseMean, x-axis) for the contrast Infected + Vehicle vs Infected + Dillapiole. It reveals the specific effect of dillapiole treatment on infected THP-1 cells.
+Overall observations:
+
+The y-axis range [-8, 5] fully captures the observed fold changes, with the most extreme points reaching ~−7 (downregulation) and ~+5 (upregulation).
+The gray band (genes near log2FC = 0) is relatively wide and dense, indicating a large proportion of genes remain unaffected or show only small changes.
+Downregulated genes (negative log2FC) show much greater dispersion and spread across the plot compared to upregulated genes.
+Upregulated genes (positive log2FC) are more clustered near the gray band (closer to zero) and less dispersed overall.
+Low-expression genes (left side, low baseMean) are predominantly downregulated (more blue points on the left).
+High-expression genes (right side, high baseMean) are more likely to be upregulated (more blue points on the right).
+
+This pattern suggests that dillapiole's presence during infection leads to a more limited and asymmetric response: stronger and more widespread downregulation (especially in low-expression genes), while upregulation is weaker, more constrained, and shifted toward high-expression genes. 
+
+**Comparison with Vehicle Plot (Vehicle + Infected vs Vehicle + Uninfected)** 
+
+Vehicle (pure infection effect without treatment):
+- Wider upregulation (up to ~+7) with greater dispersion, especially in low-expression genes.
+- Downregulation limited (max ~−4) and more clustered near zero.
+- More dispersed overall changes, with low-expression genes driving most upregulation.
+
+Key differences when comparing to Infected:
+Density near zero (gray band): Much higher in Infected, fewer genes are significantly perturbed when dillapiole is present during infection.
+Upregulation: Stronger and more dispersed in Vehicle (max +7, more spread in low-expression genes); weaker and more clustered in Infected (max +5, shifted to high-expression genes).
+Downregulation: Limited and focused in Vehicle (max −4, clustered near zero); stronger, more dispersed, and shifted to low-expression genes in Infected (down to −7, broader spread). 
+
+Overall effect: Pure infection (Vehicle) drives a robust, activation-dominated response (stronger upregulation, limited downregulation). Adding dillapiole during infection (Infected) attenuates upregulation, enhances downregulation, and reduces the total number of affected genes resulting in a more suppressed and less widespread transcriptional response.
+
+**Interpretation:**
+The presence of dillapiole during infection dampens the strong activation seen in pure infection and shifts the balance toward more pronounced downregulation, particularly in low-expression genes. This is consistent with dillapiole reducing bacterial virulence, leading to a less aggressive host response rather than broad amplification or suppression. The reduced number of perturbed genes and constrained upregulation suggest a modulatory, protective effect on the infected cell's transcriptome.
+
+![MA plot, Infected](https://github.com/niktaghanei/differential-gene-expression-analysis/blob/main/plots/ma%20plots/infected_MA_edited.png)
+
