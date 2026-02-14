@@ -151,29 +151,34 @@ dev.off()
 
 
 # Volcano plots
+res_vehicle_shr$symbol <- mapIds(org.Hs.eg.db, keys = rownames(res_vehicle_shr), keytype = "ENSEMBL", column = "SYMBOL")
+res_dillapiole_shr$symbol <- mapIds(org.Hs.eg.db, keys = rownames(res_dillapiole_shr), keytype = "ENSEMBL", column = "SYMBOL")
+res_uninf_shr$symbol <- mapIds(org.Hs.eg.db, keys = rownames(res_uninf_shr), keytype = "ENSEMBL", column = "SYMBOL")
+res_inf_shr$symbol <- mapIds(org.Hs.eg.db, keys = rownames(res_inf_shr), keytype = "ENSEMBL", column = "SYMBOL")
+
 EnhancedVolcano(res_vehicle_shr,
-                lab=rownames(res_vehicle_shr),
-                x='log2FoldChange', y='padj',
-                title='Infected vs Uninfected (Vehicle)')
-ggsave('infected_vs_uninfected_vehicle_volcano.png', width = 9, height = 7)
+                lab = res_vehicle_shr$symbol,
+                x = 'log2FoldChange', y = 'padj',
+                title = 'Infected vs Uninfected (Vehicle)')
+ggsave('vehicle_withsymbol_volcano.png', width = 9, height = 7)
 
 EnhancedVolcano(res_dillapiole_shr,
-                lab=rownames(res_dillapiole_shr),
-                x='log2FoldChange', y='padj',
-                title='Infected vs Uninfected (Dillapiole)')
-ggsave('infected_vs_uninfected_dillapiole_volcano.png', width = 9, height = 7)
+                lab = res_dillapiole_shr$symbol,
+                x = 'log2FoldChange', y = 'padj',
+                title = 'Infected vs Uninfected (Dillapiole)')
+ggsave('dillapiole_withsymbol_volcano.png', width = 9, height = 7)
 
 EnhancedVolcano(res_uninf_shr,
-                lab=rownames(res_uninf_shr),
-                x='log2FoldChange', y='padj',
-                title='Dillapiole vs Vehicle (Uninfected)')
-ggsave('dillapiole_vs_vehicle_uninfected_volcano.png', width = 9, height = 7)
+                lab = res_uninf_shr$symbol,
+                x = 'log2FoldChange', y = 'padj',
+                title = 'Dillapiole vs Vehicle (Uninfected)')
+ggsave('uninfected_withsymbol_volcano.png', width = 9, height = 7)
 
 EnhancedVolcano(res_inf_shr,
-                lab=rownames(res_inf_shr),
-                x='log2FoldChange', y='padj',
-                title='Dillapiole vs Vehicle (Infected)')
-ggsave('dillapiole_vs_vehicle_infected_volcano.png', width = 9, height = 7)
+                lab = res_inf_shr$symbol,
+                x = 'log2FoldChange', y = 'padj',
+                title = 'Dillapiole vs Vehicle (Infected)')
+ggsave('infected_withsymbol_volcano.png', width = 9, height = 7)
 
 
 # Heatmaps 
