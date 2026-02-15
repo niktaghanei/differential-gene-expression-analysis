@@ -182,21 +182,42 @@ ggsave('infected_withsymbol_volcano.png', width = 9, height = 7)
 
 
 # Heatmaps 
+gene_symbols <- mapIds(org.Hs.eg.db, keys = rownames(vsd), keytype = "ENSEMBL", column = "SYMBOL", multiVals = "first")
+names(gene_symbols) <- all_genes  
 ann <- as.data.frame(colData(vsd)[,c('infection','treatment')])
 
-top10_heatmap <- function(sig_res,title,filename,keep_fun){
-  up <- head(rownames(sig_res[order(sig_res$log2FoldChange,decreasing=TRUE), ]), 10)
+top10_heatmap <- function(sig_res, title, filename, keep_fun) {
+  up <- head(rownames(sig_res[order(sig_res$log2FoldChange, decreasing = TRUE), ]), 10)
   down <- head(rownames(sig_res[order(sig_res$log2FoldChange), ]), 10)
-  genes <- unique(c(up,down))
+  genes <- unique(c(up, down))
+  
+  
+  gene_labels <- gene_symbols[genes]
+  gene_labels[is.na(gene_labels)] <- names(gene_labels)[is.na(gene_labels)]  
+  
   keep <- keep_fun(colData(vsd))
-  mat <- assay(vsd)[genes,keep]
-  pheatmap(mat, annotation_col = ann[keep,], main = title, filename = filename)
+  mat <- assay(vsd)[genes, keep]
+  
+ 
+  pheatmap(
+    mat,
+    annotation_col = ann[keep, ],
+    main = title,
+    filename = filename,
+    labels_row = gene_labels, 
+    fontsize_row = 8,          
+    fontsize_col = 8,
+    cluster_rows = TRUE,
+    cluster_cols = TRUE
+  )
 }
 
-top10_heatmap(sig_vehicle,'Vehicle','vehicle_infected_vs_uninfected.png', function(cd) cd$treatment=='Vehicle')
-top10_heatmap(sig_dillapiole,'Dillapiole','infected_vs_uninfected_dillapiole_heatmap.png', function(cd) cd$treatment=='Dillapiole')
-top10_heatmap(sig_uninf,'Uninfected','dillapiole_vs_vehicle_uninfected_heatmap.png', function(cd) cd$infection=='Uninfected')
-top10_heatmap(sig_inf,'Infected','dillapiole_vs_vehicle_infected_heatmap.png', function(cd) cd$infection=='Infected')
+
+top10_heatmap(sig_vehicle, 'Vehicle', 'vehicle_withsymbol.png', function(cd) cd$treatment == 'Vehicle')
+top10_heatmap(sig_dillapiole, 'Dillapiole', 'Dillapiole_withsymbol.png', function(cd) cd$treatment == 'Dillapiole')
+top10_heatmap(sig_uninf, 'Uninfected', 'uninfected_withsymbol.png', function(cd) cd$infection == 'Uninfected')
+top10_heatmap(sig_inf, 'Infected', 'infected_withsymbol.png', function(cd) cd$infection == 'Infected')
+
 
 
 # Annotation
