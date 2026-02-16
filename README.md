@@ -72,106 +72,81 @@ The y-axis was scaled to [-6, 8] to display the fold changes without too much em
 
 **MA Plot: Infected vs Uninfected (Dillapiole)**
 
-Key observations:
-Most genes cluster around log2FC = 0 (gray band), as expected for the majority of the transcriptome that remains stable. The y-axis range [-8, 10] was chosen to fully capture the observed extremes while maintaining clear visibility of all points and patterns.
-- A substantial number of genes show strong differential expression, with log2FC values ranging from approximately -8 (downregulation) to +10 (upregulation). This wide spread indicates a robust transcriptional response to infection even in the presence of Dillapiole.
-- Low-expressed genes (left side) exhibit the greatest scatter in log2FC, typical due to higher relative variability in low-count transcripts (sampling noise + biological overdispersion).
-- Highly expressed genes (right side) show much tighter fold changes, consistent with stable housekeeping genes that are generally unresponsive to infection/treatment.
+- Most genes are centered around log2FC = 0, as expected for the bulk of the transcriptome. The y-axis limit was set to [-8, 10] to encompass the observed extremes while keeping all data points visible.
+- Many genes display strong differential expression, with log2FC values spread from about -8 to +10. The large spread of values indicates a strong transcriptional response to infection even in the presence of Dillapiole.
+- Low-expressed genes display the largest spread of log2FC values, which is expected because of the greater relative variability of low-count transcripts.
+- Highly expressed genes display much smaller fold changes, as expected for stable housekeeping genes that are largely unresponsive to infection and treatment.
 
-Compared to the Vehicle condition, this plot shows:
-- A broader cloud of points overall.
-- A higher apparent number of genes with substantial |log2FC| > 1 (both up- and down-regulated).
-- Reduced density of genes tightly clustered near log2FC = 0 (fewer unaffected genes).
+In comparison to the Vehicle treatment, this plot shows:
 
-This suggests Dillapiole may lead to a more widespread or slightly amplified transcriptional response during infection, rather than suppressing changes. Biologically, this could reflect Dillapiole's known role in dampening bacterial virulence gene expression, resulting in a less aggressive infection and a broader host response (activation of more diverse immune/inflammatory pathways).  
+- A larger spread of points overall.
+- More genes with large |log2FC| > 1 compared to the Vehicle treatment.
+- Fewer genes with log2FC close to 0.
+
+This indicates that Dillapiole might cause a more widespread or perhaps slightly enhanced transcriptional response during infection, rather than inhibiting it. A biological explanation for this observation might be that Dillapiole suppresses the expression of bacterial virulence genes, leading to a less aggressive infection and a more widespread host response.  
 
 ![MA plot, Dillapiole](https://github.com/niktaghanei/differential-gene-expression-analysis/blob/main/plots/ma%20plots/dillapiole_MA_edited.png)
 
 
 
-
-
-
-
-
-
-
-
 **MA Plot: Dillapiole vs Vehicle (Uninfected)**
 
-This plot shows the direct/baseline effect of Dillapiole treatment on uninfected THP-1 cells.
+This plot illustrates the direct baseline effect of Dillapiole treatment on uninfected THP-1 cells.
 
-- Classic mean-variance trend: high scatter at low expression (left), tight fold changes at high expression (right)
-- y-range [-10, 8] captures all observed changes, with some genes showing strong regulation (fold changes up to ~1000×).
-- Density near log2FC = 0 is moderate. Dillapiole perturbs a noticeable fraction of the transcriptome even in the absence of infection.
+- There is a typical mean-variance relationship: high scatter at low expression and compact fold changes at high expression.
+- The y-axis range [-10, 8] captures all observed changes, with some genes being highly regulated (fold changes up to ~1000×).
+- The density at log2FC = 0 is moderate, indicating that Dillapiole significantly perturbs a substantial part of the transcriptome even in the absence of infection.
 
-**Comparison: Uninfected vs Vehicle MA Plots** 
+Comparison: Uninfected vs Vehicle MA Plots 
+To distinguish between the direct effect of Dillapiole on host cells from its possible modulation of the infection response, I compared the treatment effect in infected cells to the direct treatment effect in uninfected cells.
 
-To distinguish between dillapiole's direct effect on host cells and its potential modulation of the infection response, I compare:
-- Infected + Dillapiole vs Infected + Vehicle (treatment effect during infection)
-- Uninfected + Dillapiole vs Uninfected + Vehicle (baseline treatment effect without infection)
+Main differences:
 
-Key differences:
-- **Downregulation stronger in Uninfected**: More genes and larger negative log2FC in the Uninfected plot, indicating Dillapiole alone suppresses a broader portion of the transcriptome in uninfected cells.
-- **Fewer unaffected genes in Uninfected**: Reduced density near log2FC = 0 (gray band) in Uninfected compared to Vehicle, showing Dillapiole perturbs more genes even without infection.
-- **Upregulation more dispersed in Vehicle**: Infected cells without treatment show wider spread in positive log2FC, consistent with robust activation of immune/inflammatory pathways.
-- **Downregulation more clustered near zero in Vehicle**: Limited and weaker downregulation during pure infection, typical of innate immune activation focused on upregulation rather than suppression.
+- Downregulation is stronger in Uninfected: There are more genes and larger negative log2FC values in the Uninfected plot, indicating that Dillapiole alone downregulates a larger part of the transcriptome in uninfected cells.
+- Fewer genes unaffected in Uninfected: There is less density at log2FC = 0 in the Uninfected plot than in the Vehicle plot, indicating that Dillapiole significantly perturbs more genes even without infection.
+- Upregulation is more spread out in Vehicle: Infected cells without treatment have a more spread-out distribution of positive log2FC values, which reflects the strong induction of immune and inflammatory responses.
+- Downregulation is more concentrated around zero in Vehicle: There is less and weaker downregulation in pure infection, which is expected for innate immune stimulation that primarily targets upregulation rather than downregulation.
 
-**Interpretation**:
-Dillapiole exerts a predominantly suppressive effect on uninfected THP-1 cells, while infection drives widespread upregulation with minimal downregulation. These contrasting patterns suggest Dillapiole does not simply mimic or add to the infection response; its presence during infection likely modulates the host transcriptome in a way that differs from its baseline action.
+**Interpretation:**
+Dillapiole has a predominantly suppressive role on uninfected THP-1 cells, whereas infection promotes widespread upregulation and minimal downregulation. These opposing profiles indicate that the presence of Dillapiole during infection is likely to modulate the host transcriptome in a manner that differs from its suppressive role.
 
 **Comparison: Uninfected vs Infected MA Plots**
 
-Key differences:
-- Much higher density of unaffected genes (gray band near log2FC = 0) in the Infected plot, fewer genes overall show significant changes during infection + Dillapiole.
-- Upregulation in Uninfected reaches higher extremes (up to ~+7) with greater dispersion, especially among low-expression genes (left side); in Infected, upregulation is weaker (max ~+5) and more focused on high-expression genes (right side).
-- Downregulation in Uninfected is stronger among high-expression genes (right side); in Infected, it shifts toward low-expression genes (left side) with reduced overall spread.
+key differences:
+- There is a substantially higher density of unaffected genes in the Infected plot, indicating that fewer genes overall exhibit significant changes in the "infection + Dillapiole" scenario.
+- Upregulation in Uninfected is more extreme (up to ~+7) with greater spread, particularly for low-expression genes. In the Infected group, upregulation is less extreme (up to ~+5) and more concentrated on high-expression genes.
+- Downregulation in the Uninfected group is stronger in high-expression genes, whereas in the Infected group, it tilts towards low-expression genes with less overall spread.
 
-**Interpretation**:
-Dillapiole alone induces broad changes in uninfected cells, with strong upregulation in low-expression genes and downregulation in high-expression genes. During infection, its effect becomes more limited: fewer genes are perturbed, upregulation is attenuated and shifts to high-expression genes, and downregulation focuses on low-expression genes. This suggests Dillapiole modulates the host response during infection (likely by dampening bacterial virulence) leading to a less widespread and more balanced transcriptional reaction compared to its baseline action on uninfected cells. 
+**Interpretation:**
+Uninfected cells show overall changes due to Dillapiole alone. But in the infected state, the effect is more contained: fewer genes are affected, and upregulation is lessened. This indicates that Dillapiole has a modulating effect on the host response during infection, which is likely to cause a less widespread and balanced transcriptional response compared to its original effect on uninfected cells.
 
 ![MA Plot, Uninfected](https://github.com/niktaghanei/differential-gene-expression-analysis/blob/main/plots/ma%20plots/uninfected_MA_edited.png) 
 
 
-
-
-
-
-
-
-
-
-
 **MA Plot: Infected (Infected + Vehicle vs Infected + Dillapiole)**
 
-This MA plot shows shrunk log2 fold changes (y-axis) against mean normalized counts (baseMean, x-axis) for the contrast Infected + Vehicle vs Infected + Dillapiole. It reveals the specific effect of Dillapiole treatment on infected THP-1 cells.
+This MA plot shows the direct effect of Dillapiole treatment on infected THP-1 cells.
 Overall observations:
 
-The y-axis range [-8, 5] fully captures the observed fold changes, with the most extreme points reaching ~−7 (downregulation) and ~+5 (upregulation).
-The gray band (genes near log2FC = 0) is relatively wide and dense, indicating a large proportion of genes remain unaffected or show only small changes.
-Downregulated genes (negative log2FC) show much greater dispersion and spread across the plot compared to upregulated genes.
-Upregulated genes (positive log2FC) are more clustered near the gray band (closer to zero) and less dispersed overall.
-Low-expression genes (left side, low baseMean) are predominantly downregulated (more blue points on the left).
-High-expression genes (right side, high baseMean) are more likely to be upregulated (more blue points on the right).
+- The range of the y-axis [-8, 5] encompasses all the data points, with the most extreme points reaching ~−7 and ~+5.
+- The gray shading is broad and packed, showing that most genes are not affected.
+- Downregulated genes are much more spread out in the plot than upregulated genes.
+- Upregulated genes are more concentrated around the origin and are less spread out.
+- Low-expression genes are mostly downregulated, whereas high-expression genes are mostly upregulated.
+  
+This indicates that the presence of Dillapiole during infection results in a more suppressed and asymmetric response: stronger downregulation (especially in low-expression genes), while upregulation is weaker and more focused on high-expression genes.
 
-This pattern suggests that Dillapiole's presence during infection leads to a more limited and asymmetric response: stronger and more widespread downregulation (especially in low-expression genes), while upregulation is weaker, more constrained, and shifted toward high-expression genes. 
+**Comparison with Vehicle Plot (Vehicle + Infected vs Vehicle + Uninfected) in pure infection (without treatment):**
+- Upregulation is wider (up to ~+7) with greater dispersion.
+- Downregulation is limited (max ~−4) and more clustered around zero.
 
-**Comparison with Vehicle Plot (Vehicle + Infected vs Vehicle + Uninfected)** 
-
-Vehicle (pure infection effect without treatment):
-- Wider upregulation (up to ~+7) with greater dispersion, especially in low-expression genes.
-- Downregulation limited (max ~−4) and more clustered near zero.
-- More dispersed overall changes, with low-expression genes driving most upregulation.
-
-Key differences when comparing to Infected:
-Density near zero (gray band): Much higher in Infected, fewer genes are significantly perturbed when Dillapiole is present during infection.
-Upregulation: Stronger and more dispersed in Vehicle (max +7, more spread in low-expression genes); weaker and more clustered in Infected (max +5, shifted to high-expression genes).
-Downregulation: Limited and focused in Vehicle (max −4, clustered near zero); stronger, more dispersed, and shifted to low-expression genes in Infected (down to −7, broader spread). 
-
-Overall effect: Pure infection (Vehicle) drives a robust, activation-dominated response (stronger upregulation, limited downregulation). Adding Dillapiole during infection (Infected) attenuates upregulation, enhances downregulation, and reduces the total number of affected genes resulting in a more suppressed and less widespread transcriptional response.
+Important differences from the Treated group:
+- Density around zero: This attribute is much higher in the Infected group, indicating that fewer genes are significantly affected when Dillapiole is present.
+- Upregulation: This feature is stronger in the Vehicle group but weaker and more clustered when treated.
+- Downregulation: This is limited in the Vehicle group, but stronger and more dispersed in the Treated group.
 
 **Interpretation:**
-The presence of Dillapiole during infection dampens the strong activation seen in pure infection and shifts the balance toward more pronounced downregulation, particularly in low-expression genes. This is consistent with Dillapiole reducing bacterial virulence, leading to a less aggressive host response rather than broad amplification or suppression. The reduced number of perturbed genes and constrained upregulation suggest a modulatory, protective effect on the infected cell's transcriptome.
+Pure infection induces a strong, activation-dominant response. The presence of Dillapiole during infection weakens this upregulation, strengthens downregulation, and reduces the number of affected genes. This leads to a more suppressed and less widespread transcriptional response.
 
 ![MA plot, Infected](https://github.com/niktaghanei/differential-gene-expression-analysis/blob/main/plots/ma%20plots/infected_MA_edited.png)
 
@@ -181,61 +156,59 @@ The presence of Dillapiole during infection dampens the strong activation seen i
 
 Volcano Plots: Differential Expression Results 
 
-Volcano plots are one of the most common and powerful ways to visualize RNA-seq differential expression results. They combine two key pieces of information in a single scatter plot:
+Volcano plots are one of the most popular and effective methods for visualizing RNA-seq differential expression analysis results. They provide two crucial pieces of information in a single scatter plot:
 
-- **Horizontal axis (x)**: log2 Fold Change (log2FC)  
-  Shows the magnitude and direction of expression change between two conditions.  
+#1 **Horizontal axis (x)**: log2 Fold Change (log2FC)  
+  Indicates the degree and direction of gene expression change between two conditions.  
   - Positive values (right side): gene is upregulated (higher expression in the first group)
   - Negative values (left side): gene is downregulated (lower expression in the first group)  
-  - A change of log2FC = 1 means ~2-fold upregulation; log2FC = -1 means ~2-fold downregulation
+  - A value of log2FC = 1 indicates ~2-fold upregulation; log2FC = -1 indicates ~2-fold downregulation
 
-- **Vertical axis (y)**: -log10(adjusted p-value) or -log10(padj)  
-  Shows statistical significance (how unlikely the observed change is due to chance) 
+#2 **Vertical axis (y)**: -log10(adjusted p-value) or -log10(padj)  
+  Indicates the statistical significance (how likely the observed value is due to random chance) 
   - Higher points = more significant (smaller padj)
 
-**Classic thresholds** used in most RNA-seq studies:
-- padj < 0.05 (or sometimes 0.01 for stricter control of false positives)
-- |log2FC| > 1 (fold change > 2 or < 0.5, considered biologically meaningful)
+**Common cut-offs** used in most RNA-seq analyses:
+- padj < 0.05 (or 0.01 for more stringent control of false positives)
+- |log2FC| > 1 (fold change > 2 or < 0.5, biologically significant)
 
-Genes that pass both thresholds (significant + large change) are usually colored red. Genes with only large change but no significance are green, genes with only significance but small change are light blue, and non-significant/small-change genes are gray.
+Genes that meet both criteria (significant and large change) are typically colored red. Genes with large change but no significance are green, genes with significance but small change are light blue, and non-significant/small change genes are gray.
 
 
 **Volcano Plot: Infected vs Uninfected (Vehicle)**
 
-This volcano plot shows shrunk log2 fold changes vs -log10(padj) for the contrast Infected_Vehicle vs Uninfected_Vehicle (pure infection effect).
+This volcano plot displays shrunk log2 fold changes and -log10(padj) for the contrast Infected_Vehicle vs Uninfected_Vehicle (pure infection effect).
 
 **Key observations**:
-- Strong asymmetric response: upregulation dominates (right side), with many genes reaching high significance (red points up to -log10(padj) ~60).
-- Downregulation is limited (few red points on left).
-- Labeled genes include key immune/stress-related markers:  
-  - **NFKBIA**: NF-κB inhibitor; feedback control of inflammation.  
+- Asymmetric response: upregulation is more prominent (right side), with most genes showing high significance (red dots up to -log10(padj) ~60).
+- Downregulation is minimal (few red dots on the left).
+- Identified genes include prominent immune/stress response markers:  
+  - **NFKBIA**: NF-κB inhibitor; regulates feedback of inflammation.  
   - **IL4I1**: Immune regulation and arginine metabolism; modulates inflammation.  
   - **HSPA1B**: Heat shock protein; protects cells under infection stress.  
-  - **ERCC1**: DNA repair; response to infection-induced damage.   
-  - **TBC1D17**: Regulates autophagy/vesicle trafficking; potential defense against intracellular pathogen.
+  - **ERCC1**: DNA repair; responds to infection-induced damage.   
+  - **TBC1D17**: Regulates autophagy/vesicle trafficking; putative defense mechanism against intracellular pathogen.
 
-Most significant DEGs are upregulated and enriched in immune activation, inflammation control, cellular stress response, and DNA repair pathways consistent with a robust innate immune reaction to intracellular *Francisella tularensis* infection in THP-1 cells.
-Low-expression genes show higher scatter, but significant changes concentrate in medium- to high-expression genes (right-side clustering).
+Majority of highly significant DEGs are upregulated and involved in immune activation, inflammation regulation, cellular stress response, and DNA repair processes that reflect a strong innate immune response to intracellular *Francisella tularensis* infection in THP-1 cells.
+Scatter is higher in low-expression genes, but significant expression is more prominent in medium to high-expression genes (right side clustering).
 
-No technical artifacts visible; shrinkage reduces noise in low-count genes. This plot highlights infection as a strong activator of host gene expression.
+No technical artifact is apparent; shrinkage improves the precision of low-expression genes. This plot emphasizes the strong activation role of infection in host gene expression.
 
 ![Volcano plot, Vehicle](https://github.com/niktaghanei/differential-gene-expression-analysis/blob/main/plots/volcano%20plots/vehicle_withsymbol_volcano.png)
-
-
 
 
 **Volcano Plot: Infected vs Uninfected (Dillapiole)**
 
 
-Key observations in this plot:
-- Balanced up- and downregulation: unlike the Vehicle plot (stronger upregulation), here both directions are more symmetric, with roughly equal numbers of significant genes.
-- Extremely high significance: -log10(padj) reaches ~100 (much higher than Vehicle's ~60), changes are highly significant.
-- Upregulation: reaches up to ~+10, with key genes like **BEST1** (calcium-activated chloride channel, ion homeostasis), **KIF1B** (kinesin motor, vesicle/mitochondria transport), **MSC-AS1** (lncRNA, gene regulation), **ICAM4-AS1** (lncRNA, cell adhesion), **TRPA1** (cation channel, inflammation/pain sensing), **MRNIP** (DNA repair/stress response).
-- Downregulation: reaches down to ~-8, with genes like **ENOSF1** (fucose metabolism), **LRRC41** (ubiquitin ligase component), **WDR5** (histone methylation), **LCORL** (transcription factor).
-- Green region (large FC but non-significant) is thinner and more dispersed than in Vehicle -> fewer large non-significant changes.
+Key observations:
+- Symmetric up- and downregulation: unlike the Vehicle plot (more upregulation), this plot shows more balanced up- and downregulation, with similar numbers of genes.
+- Highly significant: -log10(padj) ~100 (well above Vehicle ~60), highly significant changes.
+- Upregulation: reaches up to ~+10, with important genes such as **BEST1** (calcium-activated chloride channel, ion homeostasis), **KIF1B** (kinesin motor, vesicle/mitochondria transport), **MSC-AS1** (lncRNA, gene regulation), **ICAM4-AS1** (lncRNA, cell adhesion), **TRPA1** (cation channel, inflammation/pain sensing), **MRNIP** (DNA repair/stress response).
+- Downregulation: reaches down to ~-8, with genes such as **ENOSF1** (fucose metabolism), **LRRC41** (ubiquitin ligase component), **WDR5** (histone methylation), **LCORL** (transcription factor).
+- Green area (large FC but not significant) is less dense and spread out compared to Vehicle -> fewer large non-significant changes.
 
 **Interpretation**:
-Infection in the presence of Dillapiole produces a more balanced and highly significant transcriptional response compared to pure infection (Vehicle). Upregulation is strong but less extreme, while downregulation is more prominent and dispersed. This suggests Dillapiole modulates the host response, reducing extreme activation while enhancing certain suppressive changes, likely by dampening bacterial virulence and altering the infection dynamics. 
+Infection with Dillapiole has a more balanced and highly significant transcriptional profile compared to pure infection (Vehicle). Upregulation is less extreme, but downregulation is more pronounced and spread out. This indicates that Dillapiole has a modulating effect on the host response, suppressing extreme upregulation and promoting more downregulation, likely by inhibiting bacterial virulence and infection dynamics.
 
 ![Volcano plot, Dillapiole](https://github.com/niktaghanei/differential-gene-expression-analysis/blob/main/plots/volcano%20plots/dillapiole_withsymbol_volcano.png)
 
@@ -244,40 +217,39 @@ Infection in the presence of Dillapiole produces a more balanced and highly sign
 **Volcano Plot: Uninfected (Uninfected + Dillapiole vs Uninfected + Vehicle)**
 
 Key observations:
-- Balanced up- and downregulation: roughly equal numbers of significant genes in both directions (unlike Vehicle's upregulation dominance).
-- High significance: -log10(padj) reaches ~80, very strong statistical support for changes.
-- Upregulation: reaches up to ~+10, with key genes like **KIF1B** (vesicle/mitochondria transport), **HDGFL3** (cell growth/repair), **TRPA1** (cation channel, inflammation sensing), **WDR13** (gene regulation/signaling).
-- Downregulation: reaches down to ~-8, with top genes like **INTS8** (snRNA processing), **LRRC41** (ubiquitin ligase component), **WDR5** (histone methylation), **LCORL** (transcription factor).
-- Green region (large FC but non-significant) is thinner and more dispersed than in Vehicle —> fewer large non-significant changes.
+- More balanced up- and downregulation: similar numbers of significant genes in both categories (no longer dominated by upregulation as in Vehicle).
+- Highly significant: -log10(padj) ~80, strong statistical evidence for changes.
+- Upregulation: extends up to ~+10, with major genes such as **KIF1B** (vesicle/mitochondria transport), **HDGFL3** (cell growth/repair), **TRPA1** (cation channel, inflammation sensing), **WDR13** (gene regulation/signaling).
+- Downregulation: extends down to ~-8, with major genes such as **INTS8** (snRNA processing), **LRRC41** (ubiquitin ligase component), **WDR5** (histone methylation), **LCORL** (transcription factor).
+- Green region (large FC but non-significant) is less dense and more scattered than in Vehicle → fewer large non-significant changes.
 
 **Comparison with Vehicle (pure infection)**:
-- Vehicle shows stronger upregulation (max +7) and limited downregulation (max -4), with low-expression genes driving most changes.
-- Uninfected shows more balanced changes, stronger downregulation, and high-expression genes more affected.
-- Fewer unaffected genes (gray band) in Uninfected, Dillapiole perturbs more of the transcriptome in healthy cells.
-- Shared downregulated genes (e.g., LRRC41, WDR5, MLX, VRK2) maintain similar positions, suggesting these are direct Dillapiole effects independent of infection.
+- Vehicle has more upregulation (max +7) and less downregulation (max -4), with low-expression genes dominating most changes.
+- Uninfected has more balanced changes, more downregulation, and high-expression genes are more affected.
+- Fewer unaffected genes (gray band) in Uninfected, Dillapiole affects more of the transcriptome in uninfected cells.
+- Common downregulated genes (e.g., LRRC41, WDR5, MLX, VRK2) retain similar positions, indicating these are direct Dillapiole effects not influenced by infection.
 
 **Interpretation**:
-Dillapiole alone induces a broad, balanced response in uninfected cells, with strong downregulation (especially high-expression genes) and upregulation in low-expression genes. This contrasts with pure infection's activation-dominated pattern. Dillapiole's baseline suppression may contribute to its modulatory role during infection, where the response becomes more controlled and less extreme. 
+Uninfected cells have a balanced response to Dillapiole alone, with strong downregulation (especially high-expression genes) and upregulation in low-expression genes. This is in contrast to the activation-biased response in pure infection. The baseline downregulation by Dillapiole could explain its modulatory action in infection, where the response is more regulated and less drastic. 
 
 ![Volcano plot, Uninfected](https://github.com/niktaghanei/differential-gene-expression-analysis/blob/main/plots/volcano%20plots/uninfected_withsymbol_volcano.png) 
 
 **Volcano Plot: Infected (Infected + Vehicle vs Infected + Dillapiole)**
 
-
 Key observations:
-- Relatively balanced up and downregulation, with a wide y-range (~90) indicating very high statistical significance for changes.
-- Downregulation is more dispersed and extensive (down to ~-7), especially in low-expression genes (left side).
-- Upregulation is weaker (max ~+5) and more clustered near zero, focusing on high-expression genes (right side).
-- High density of unaffected genes (gray band) compared to other contrasts —> fewer genes are significantly perturbed.
+- Relatively balanced down- and upregulation, with large y-range (~90) reflecting very high statistical significance of the changes.
+- Downregulation is more scattered and widespread (down to ~-7), particularly in low-expression genes (left side).
+- Upregulation is weaker (max ~+5) and more concentrated around zero, particularly in high-expression genes (right side).
+- High density of unaffected genes (gray band) compared to other comparisons --> fewer genes are significantly affected.
 
 **Comparison with Vehicle (pure infection)**:
-- Vehicle shows stronger upregulation (up to ~+7) and limited downregulation (max ~-4), with changes dispersed in low-expression genes.
-- Infected shows weaker upregulation (max ~+5, shifted to high-expression genes) and stronger, more dispersed downregulation (max ~-7, focused on low-expression genes).
+- Vehicle has stronger upregulation (up to ~+7) and limited downregulation (max ~-4), with scattered changes in low-expression genes.
+- Infected has weaker upregulation (max ~+5, shifted to high-expression genes) and stronger, more scattered downregulation (max ~-7, in low-expression genes).
 - Much higher density near log2FC = 0 in Infected, dillapiole reduces the number of affected genes during infection.
-- Downregulation is more prominent and widespread in Infected, while upregulation is attenuated and redirected.
+- Downregulation is more pronounced and widespread in Infected, while upregulation is weakened and shifted.
 
 **Interpretation**:
-Dillapiole during infection attenuates the strong activation seen in pure infection (Vehicle) and enhances downregulation, particularly in low-expression genes. This results in a more limited, balanced, and suppressed transcriptional response, consistent with dillapiole dampening bacterial virulence, reducing the intensity of the host immune response, and shifting changes toward high-expression genes for a more controlled outcome. 
+Dillapiole during infection weakens the strong activation present in pure infection (Vehicle) and further promotes downregulation, particularly in low-expression genes. This leads to a more restricted, balanced, and suppressed transcriptional response, in agreement with dillapiole weakening bacterial virulence, reducing the strength of the host immune response, and shifting the changes to high-expression genes for a more regulated response.
 
 ![Volcano plot, Infected](https://github.com/niktaghanei/differential-gene-expression-analysis/blob/main/plots/volcano%20plots/infected_withsymbol_volcano.png)
 
@@ -285,25 +257,27 @@ Dillapiole during infection attenuates the strong activation seen in pure infect
 5. **Heatmaps**
 
 Heatmaps: Expression Patterns of Top DE Genes
-Heatmaps are a powerful way to visualize gene expression patterns across samples for a selected set of genes (here, the top 10 up and downregulated genes from each contrast). 
-They show:
-- **Rows**: Individual genes (labeled with gene symbols for readability, sourced from org.Hs.eg.db).
-- **Columns**: Individual samples (grouped and annotated by infection status and treatment).
-- **Color scale**: VST-transformed expression values (blue = low expression, red = high expression; white = intermediate).
+Heatmaps are an excellent tool for visualizing gene expression patterns across samples for a subset of genes of interest (in this case, the top 10 up and downregulated genes for each contrast).
+They display:
+- **Rows**: Individual genes (displayed with gene symbols for convenience, obtained from org.Hs.eg.db).
+- **Columns**: Individual samples (aggregated and labeled according to infection status and treatment).
+- **Color scale**: VST-normalized expression values (blue = low expression, red = high expression; white = intermediate).
 
-Clustering is applied to both rows (genes) and columns (samples) using hierarchical clustering with Euclidean distance. This helps reveal:
-- How samples group together (infected vs uninfected).
-- How genes co-express across conditions.
-- Patterns of up or downregulation in specific groups.
+Row and column clustering (for genes and samples, respectively) are performed using hierarchical Euclidean clustering. This aids in:
+- Identifying samples that group together (infected vs uninfected).
+- Identifying genes that co-regulate across conditions.
+- Identifying genes that are up- or downregulated in specific groups.
 
-Heatmaps complement volcano and MA plots by showing **relative expression levels** across all samples, not just fold changes or significance. They are especially useful for confirming biological consistency and spotting replicate variability or outliers.
+Heatmaps can be used in addition to volcano and MA plots to visualize **expression levels** across all samples, rather than just fold changes or significance values. They are particularly useful for checking biological consistency and identifying replicate variability or outliers.
 
+
+  
 **Heatmap: Vehicle (Top DE Genes)**
 
 Key observations
 - Uninfected samples cluster tightly
-- Infected samples show slightly greater spread (expected biological variability in response to intracellular infection).
-- Most top genes are upregulated in infected samples (lighter colors in infected columns), including key immune/stress genes:  
+- - Infected samples cluster slightly more variably (reflecting expected biological variation due to intracellular infection).
+- Most top genes are upregulated in infected samples (lighter colors in infected columns), including prominent immune/stress response genes:
   - **CCL3-AS1** (antisense to chemokine CCL3 -> immune cell recruitment)  
   - **HSPA6** (heat shock protein -> cellular stress protection)  
   - **IL4I1** (immune regulation and arginine metabolism)  
@@ -311,40 +285,125 @@ Key observations
   - **IGFBP3** (IGF binding -> growth/apoptosis control)  
   - **MAFB** (transcription factor -> macrophage differentiation)  
   - **RAB20** (vesicle trafficking -> phagosome maturation)
-
-Downregulated genes are fewer and less noticeable with some variability (sample Infected 4 behaves slightly differently).
+The downregulated genes are fewer and less pronounced with some variation (sample Infected 4 is slightly different).
 
 **Comparison with other plots**:
-- Compared to Uninfected (dillapiole baseline): Vehicle shows stronger and more focused upregulation (immune activation), while Uninfected has more balanced up/down with broader suppression.
-- Compared to Dillapiole (infection in presence of dillapiole): Vehicle has more extreme upregulation and less downregulation, dillapiole appears to attenuate the strong activation and shift toward more downregulation.
+- Relative to Uninfected (dillapiole baseline): Vehicle is more strongly and specifically upregulated (immune activation), while Uninfected has more balanced up/down regulation with wider suppression.
+- Relative to Dillapiole (infection in presence of dillapiole): Vehicle is more strongly upregulated and downregulates less, dillapiole reduces strong activation and increases downregulation.
 
 **Interpretation**:
-Pure infection drives a strong, upregulation-dominated response in THP-1 cells, with activation of immune recruitment (CCL3-AS1), stress protection (HSPA6), and survival pathways (BIRC3, IGFBP3). This is consistent with a strong innate immune reaction to intracellular *F. tularensis*. Variability in infected samples reflects biological heterogeneity but overall reproducibility is high. 
+Pure infection induces a strong, upregulation-predominant response in THP-1 cells, activating immune recruitment (CCL3-AS1), stress protection (HSPA6), and survival mechanisms (BIRC3, IGFBP3). This is as expected for a strong innate immune response to intracellular *F. tularensis*. Variability among infected samples reflects biological variability, but overall, there is high reproducibility. 
 
 ![Heatmap, Vehicle](https://github.com/niktaghanei/differential-gene-expression-analysis/blob/main/plots/heatmaps/vehicle_withsymbol.png)
 
 
 **Heatmap: Dillapiole (Top DE Genes)**
 
+This heatmap illustrates the top 10 genes that are up- and down-regulated in the comparison Infected + Dillapiole vs Uninfected + Dillapiole (the effect of infection when dillapiole is present).
 Clustering and sample patterns:
-Clustering reveals considerable spread among samples with large distances between groups. This is expected given the presence of two simultaneous factors (infection and treatment). Even replicates can exhibit variable responses to the combination and with only 5 samples per condition, some dispersion is normal and biologically reasonable.
+The samples are relatively spread out in the clustering, with big distances between groups. This is what we should see — we have infection and drug as factors, and we're looking at them at the same time. Even with 5 replicates per group, some variation is to be expected when two different factors are being considered.
+Key observations:
 
-Key bservations:
-An unnamed gene (identified only by ENSG ID) shows the largest shift (expression levels around 5 in uninfected + dillapiole samples rise to 7–8 in infected + dillapiole samples). This gene appears exclusively in this contrast, limiting specific functional interpretation, but the consistent upregulation across most infected samples is notable.
-ATP10B: Expression remains low (4–5) in uninfected + dillapiole samples but increases to 6 in 4 out of 5 infected + dillapiole samples, a reliable and consistent pattern. ATP10B functions as a phospholipid flippase, maintaining membrane asymmetry and facilitating lipid trafficking. The upregulation in infected cells likely reflects membrane remodeling or altered lipid handling in response to intracellular infection.
+There is one gene (no name, only ENSG ID) that shows the most change: from about 5 in uninfected + dillapiole samples, to 7-8 in infected + dillapiole samples. This gene is only present in this comparison, so we can't say exactly what it does, but it's certainly interesting that it's upregulated in infected samples.
+ATP10B: This gene is low in uninfected + dillapiole samples (4-5), but is upregulated to 6 in 4 out of 5 infected + dillapiole samples. This is a strong and consistent result. ATP10B is a phospholipid flippase that participates in membrane asymmetry and lipid transport. This upregulation is likely a result of membrane remodeling during infection.
 
 **Comparison with the corresponding volcano plot (Infected vs Uninfected in Dillapiole):**
+NGFR: Looks like it is upregulated in the volcano (log2FC ≈ 7), but in the heatmap, most of the infected + dillapiole samples have lower expression (darker blue). Note that volcano plots show group averages, while heatmaps show individual samples – this is likely a difference due to replicate variation.
+NGFR-AS1: Upregulated in the uninfected + dillapiole/vehicle volcano (log2FC ≈ 7.6), but here 4 out of 5 infected + dillapiole samples have higher expression, with one sample decreasing. NGFR-AS1 is an antisense lncRNA that regulates NGFR. The fact that most infected + dillapiole samples have higher expression suggests that the drug + infection combination together increase this regulatory pathway.
 
-NGFR: Appears upregulated in the volcano plot (log2FC ≈ 7), but in this heatmap most infected + dillapiole samples show lower relative expression (darker blue tones). This discrepancy arises because volcano plots reflect group-level averages and statistical significance, while heatmaps display per-sample expression values. Replicate heterogeneity or threshold effects can explain the difference. NGFR (neurotrophin receptor) is involved in immune modulation and cell survival; the observed variation likely reflects sample-specific responses.
-NGFR-AS1: Upregulated in the uninfected + dillapiole/vehicle volcano (log2FC ≈ 7.6), but here 4 out of 5 infected + dillapiole samples show higher expression (lighter colors), with one sample decreasing. NGFR-AS1 is an antisense lncRNA that regulates NGFR expression. The increase in infected + dillapiole samples suggests the combination of drug and infection enhances this regulatory pathway, though sample variation is evident.
-
-**Comparison with previous plots (Uninfected and Vehicle):**
-
-LRRC41, WDR5, MLX, and VRK2 show consistent downregulation across multiple contrasts involving dillapiole (positions and magnitude remain similar). This pattern strongly suggests these genes are direct targets of dillapiole, independent of infection status. LRRC41 participates in ubiquitin ligase complexes (protein degradation), WDR5 regulates histone methylation (gene activation), MLX is a transcription factor involved in metabolic control, and VRK2 is a stress-response kinase which their suppression may reflect dillapiole's broader modulatory or suppressive influence on host pathways.
-In contrast to the Vehicle plot (pure infection), where upregulation was dominant and downregulation limited, this heatmap shows a more balanced response with stronger and more dispersed downregulation, particularly in low-expression genes. This shift indicates dillapiole attenuates infection-driven activation while enhancing suppressive effects.
+Comparison with previous plots:
+LRRC41, WDR5, MLX, and VRK2 are all downregulated in all contrasts involving dillapiole (similar positions and fold changes). This is a very strong indication that these genes are direct targets of dillapiole, regardless of infection status. LRRC41 is a protein degradation factor, WDR5 is a histone methylation enzyme, MLX is a transcription factor involved in metabolic regulation, and VRK2 is a stress response protein kinase. Suppression of these genes likely indicates the general regulatory role of dillapiole on host pathways.
+Relative to the Vehicle plot (pure infection), this heatmap reflects a more balanced response with greater and more dispersed downregulation, particularly in low-expression genes. This suggests that dillapiole suppresses the strong activation of pure infection and favors a more suppressive
 
 **Interpretation:**
-The presence of dillapiole during infection results in a relatively balanced transcriptional response, with comparable numbers of up and downregulated genes but more dispersed and prominent downregulation, especially among low-expression genes. The overall number of significantly perturbed genes is reduced compared to pure infection (Vehicle), as evidenced by greater density near baseline expression levels. Genes such as ATP10B and NGFR-AS1 show consistent increases in infected + dillapiole samples, likely related to membrane dynamics and immune regulatory pathways. Shared downregulated genes (LRRC41, WDR5, MLX, VRK2) across dillapiole-containing contrasts point to direct drug effects, while the attenuated and redirected pattern during infection supports dillapiole's role in modulating host response probably by dampening bacterial virulence and leading to a more controlled transcriptional outcome.
-Reproducibility is reasonable despite visible replicate variation and is typical in infection studies with multiple factors. 
+The transcriptional response in the presence of dillapiole is a fairly balanced one, with roughly as many up-regulated and down-regulated genes, although down-regulation is more widespread, especially in low-expression genes. There are fewer genes significantly affected than in pure infection (Vehicle), as indicated by the higher density of points around the baseline expression level. Genes such as ATP10B and NGFR-AS1 are steadily up-regulated in infected + dillapiole samples, probably reflecting membrane and immune functions. The common down-regulated genes (LRRC41, WDR5, MLX, VRK2) in dillapiole-containing contrasts indicate a direct drug action, while the more carefully controlled pattern in infection suggests dillapiole’s function in modulating the host response, probably by lowering bacterial virulence.
+The reproducibility is acceptable, although there is some variation between replicates, which is to be expected in infection experiments involving several factors.
 
 ![heatmap, Dillapiole](https://github.com/niktaghanei/differential-gene-expression-analysis/blob/main/plots/heatmaps/Dillapiole_withsymbol.png)
+
+**Heatmap: Uninfected (Uninfected + Dillapiole vs Uninfected + Vehicle)**
+
+This heatmap illustrates the VST-normalized expression of the top 10 up- and down-regulated genes from the contrast Uninfected + Dillapiole vs Uninfected + Vehicle (direct effect of dillapiole on healthy cells).
+Clustering and sample distribution:
+The samples are not grouped very tightly; there is some variation between the samples. This is expected because the only variable in this experiment is dillapiole treatment, and even identical samples may react in different ways to the drug. The samples treated with dillapiole are grouped a bit more tightly than the others, indicating a reaction to the drug itself.
+
+Key gene patterns:
+One unnamed gene (only ENSG ID) has the largest difference expression of about 4.5-5 in the untreated samples (all dark blue), but much higher (6-7) in the treated samples (lighter colors in all five). This gene does not come up in any other comparisons as a top hit, so it is specific to dillapiole treatment alone. The fact that it is higher in all treated samples shows that it is a direct and reliable response to the drug, probably a gene strongly induced by dillapiole in healthy cells.
+- LOC389602: Very low expression in untreated samples (4-5, dark blue), but much higher (6-7) in treated samples (lighter colors in all five). This is consistent and reliable. LOC389602 is a very poorly characterized locus, but this kind of difference usually shows drug-induced transcriptional activation in non-infected cells.
+- NGFR-AS1: Much higher expression in treated samples (lighter colors) than in untreated samples (darker blue, around 4). This is consistent with its upregulation in the uninfected + dillapiole/vehicle volcano (log2FC ≈ 7.6). NGFR-AS1 is an antisense lncRNA that regulates NGFR expression. The strong induction by dillapiole indicates that the drug directly enhances this regulatory pathway in healthy cells.
+- LINC00543: Low in untreated samples (~4.5, dark blue), but definitely higher in treated samples (lighter colors). This is a clear pattern. LINC00543 is a long non-coding RNA with gene regulatory functions (often in stress or metabolic pathways). The elevation suggests direct dillapiole induction in healthy cells.
+MIR371A, MAFB, RPSAP44, VWA5A, NGFR, CPED1: All display the same pattern: low expression in untreated samples (~4, dark blue), but definitely higher in treated samples (lighter colors, ~5-6). 
+These genes have roles in the following processes:
+- MIR371A: microRNA cluster - regulates pluripotency and cell fate.
+- MAFB: transcription factor - regulates macrophage differentiation and inflammation.
+- RPSAP44: ribosomal protein pseudogene - may have regulatory function.
+- VWA5A: von Willebrand factor A domain - mediates cell adhesion.
+- NGFR: neurotrophin receptor - immune regulation and cell survival.
+- CPED1: cadherin-like and PC-esterase domain - mediates cell adhesion and signaling.
+The same pattern of increased expression in treated samples suggests that dillapiole directly induces these genes in healthy cells, perhaps as part of a stress response.
+**TP73-AS2, PLA2R1, RRM2, SPP1, LOC100128548, LOC124901073, RPL7P39:**
+ All have the reverse pattern: higher expression in untreated samples (~5-6), but strongly downregulated in treated samples (dark blue, around 4). These genes are involved in:
+TP73-AS2: antisense to TP73 –> regulation of apoptosis and stress response.
+PLA2R1: phospholipase A2 receptor –> lipid signaling and inflammation.
+RRM2: ribonucleotide reductase –> DNA synthesis and cell proliferation.
+SPP1: osteopontin –> immune cell recruitment and inflammation.
+LOC100128548, LOC124901073: poorly characterized loci –> likely non-coding or pseudogenes.
+RPL7P39: ribosomal protein pseudogene –> possible regulatory function.
+The strong downregulation in treated samples suggests that dillapiole strongly represses these genes in healthy cells possibly to inhibit proliferation, inflammation, or lipid signaling pathways.
+
+
+**Comparison with previous plots:**
+
+- Most of the downregulated genes in this plot (LRRC41, WDR5, PLA2R1, and others) also appeared downregulated in other dillapiole-containing comparisons this further supports that these are direct drug effects, and not influenced by infection.
+- By contrast, in the Vehicle heatmap (pure infection), the predominant effect was upregulation, while downregulation was less prominent. However, in this heatmap, there is a more pronounced and consistent suppression of treated samples where dillapiole has a wide-ranging inhibitory effect on healthy cells.
+- The trend for NGFR-AS1 and LINC00543 (upregulation with dillapiole) is consistent across uninfected contrasts and is probably direct drug induction.
+
+**Interpretation:**
+Dillapiole alone induces a strong and consistent transcriptional effect in uninfected THP-1 cells, with strong upregulation of some genes (ATP10B, NGFR-AS1, LINC00543, etc.) and strong downregulation of others (TP73-AS2, PLA2R1, RRM2, SPP1, etc.). This suggests that dillapiole has a wide-ranging suppressive effect on many pathways (proliferation, inflammation, lipid metabolism) while inducing others (possibly stress or regulatory pathways). The effect is more balanced than the Vehicle (pure infection), but suppression is more pronounced. Reproducibility is good, but sample variability is evident as expected when a single variable (the drug) is introduced.
+
+![heatmap, uninfected](https://github.com/niktaghanei/differential-gene-expression-analysis/blob/main/plots/heatmaps/uninfected_withsymbol.png)
+
+**Heatmap: Infected (Infected + Vehicle vs Infected + Dillapiole)**
+
+This heatmap illustrates VST-normalized expression values for the top 10 up- and down-regulated genes from the comparison Infected + Vehicle vs Infected + Dillapiole (direct effect of dillapiole on infected cells).
+
+**Clustering and sample patterns:**
+The samples treated with dillapiole are more closely clustered than the untreated samples. This is as expected, since dillapiole is a major player in this comparison, and the treated samples are expected to be more similar to each other, even if they are infected. The untreated infected samples are more dispersed, which is also as expected, since infection alone can lead to more variability between cells (different rates of bacterial uptake, replication, or immune activation).
+
+Key gene patterns:
+- TECR: High expression in untreated infected samples (around 9), but lower in treated infected samples (around 5). This is a very clear and consistent pattern. In the Vehicle volcano (Infected vs Uninfected), TECR was upregulated (log2FC ≈ 5, adjp-value ~47). In this contrast (Infected + Vehicle vs Infected + Dillapiole), it is strongly downregulated (log2FC ≈ -6, adjp-value ~47). TECR is an enzyme involved in very long-chain fatty acid biosynthesis (trans-2,3-enoyl-CoA reductase). The high expression level in pure infection is probably a reflection of bacterial manipulation of lipid metabolism for survival or replication. The sharp decrease with dillapiole indicates that the drug inhibits this pathway, possibly by lowering bacterial virulence, so that the host does not need to activate lipid metabolism as strongly.
+  
+- TDRD6: Very low expression in untreated infected samples (about 6), but sharply elevated to 9-10 in treated infected samples (lighter colors across most). This is consistent and reliable. TDRD6 is a tudor domain-containing protein that is involved in piRNA biogenesis and spermatogenesis, but in immune cells, it could have roles in RNA silencing or stress response. The sharp induction with dillapiole in infected cells suggests that the drug induces this gene, perhaps as part of a protective or regulatory response when infection is present.
+  
+- KIT: Relatively high expression in untreated infected samples (6-7), but reduced to about 4 in treated infected samples. In the uninfected + dillapiole/vehicle volcano, KIT was downregulated (log2FC ≈ -3). KIT is a receptor tyrosine kinase that is involved in cell survival, proliferation, and differentiation (particularly in hematopoietic cells).
+  
+- CPED1: Low expression in untreated infected samples (about 4), but higher in treated infected samples (about 5.5). This is consistent with the Uninfected heatmap (4 in untreated, 5.5 in treated). In the uninfected volcano plot, it was upregulated (log2FC ≈ 5, adjp-value ~5.7). CPED1 has cadherin-like and PC-esterase domains, and it is involved in cell adhesion and signaling. The fact that it is consistently upregulated by dillapiole (in both uninfected and infected cells) indicates a direct drug effect, which is probably related to increased adhesion or signaling in response to the drug.
+
+**THAP12P3, LINC00543, CCDC24, B4GALT2: These genes all show the same pattern:**
+very low expression in untreated infected samples (~4), but much higher in treated infected samples (~5.5-6.6).
+These genes are:
+- THAP12P3: Pseudogene or non-coding RNA; role unknown, but pseudogenes can have regulatory roles.
+- LINC00543: Long non-coding RNA; involved in gene regulation (often stress or metabolic responses).
+- CCDC24: Coiled-coil domain protein; may be involved in protein interactions or protein structure.
+- B4GALT2: Beta-1,4-galactosyltransferase; involved in glycosylation and cell surface modification.
+The fact that these genes are consistently upregulated by dillapiole in infected cells indicates a direct drug effect, which is probably related to a stress or membrane modification response.
+
+**Interpretation:**
+The transcriptional profile of dillapiole-treated infected cells is a more balanced response than that of infected cells alone (Vehicle). The tighter clustering of treated samples reflects a more similar response to the drug, even in the presence of infection. The downregulation of genes such as TECR (lipid metabolism) and KIT (proliferation/survival) indicates that dillapiole inhibits processes that the bacteria may utilize during infection. The upregulation of genes such as TDRD6 (RNA silencing/stress response), CPED1 (adhesion/signaling), and others (THAP12P3, LINC00543, CCDC24, B4GALT2) indicates direct induction by the drug, likely a regulatory or protective response. In general, dillapiole seems to modulate the activation of infection while promoting a more controlled and suppressive host response.
+The reproducibility is good, with expected but visible variation among replicates in this multi-factorial environment.
+
+![heatmap, infected](https://github.com/niktaghanei/differential-gene-expression-analysis/blob/main/plots/heatmaps/infected_withsymbol.png)
+
+
+## Conclusion
+This study focused on the impact of Francisella tularensis infection on gene expression in THP-1 cells and whether dillapiole can modulate this process.
+Pure infection (Vehicle) caused a strong, one-sided response: extremely strong induction of immune, inflammatory, and stress response genes (e.g., NFKBIA, IL4I1, HSPA6, BIRC3), with very little downregulation. This is the typical, strong innate immune response expected for an intracellular bacterial pathogen.
+The effect of dillapiole alone (Uninfected) was more balanced but suppressive on normal cells, downregulating many genes (particularly highly expressed ones) and upregulating others (e.g., KIF1B, NGFR-AS1, LINC00543). This indicates that the drug also has a direct effect on the host gene expression profile, irrespective of infection.
+
+When combined (Infected + Dillapiole), the profile was significantly different:
+- The strong induction observed in the vehicle (pure infection) was clearly dampened (less strong upregulation, less extreme changes).
+- Downregulation was stronger and more extensive, particularly in low-expression genes.
+- Fewer genes were significantly altered, leading to a more controlled and balanced transcriptional response.
+
+These findings indicate that dillapiole has a positive effect on F. tularensis infection. It does not only contribute its own effects but also modulates the infection by reducing the bacterial virulence, making it less aggressive and more manageable for the host. Rather than causing a massive immune response, the cells react in a more composed manner, which is consistent with the drug’s mechanism of suppressing the key virulence genes of the bacterium.
+In conclusion, this analysis proves that dillapiole is a virulence modulator and not a direct killer or suppressor of the host immune system. The project was able to successfully integrate computational analysis and biological interpretation to give a clear understanding of how this natural compound affects the host-pathogen interaction at the transcriptional level.
