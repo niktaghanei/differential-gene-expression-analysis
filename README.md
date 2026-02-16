@@ -1,14 +1,14 @@
 # differential gene expression analysis
 
-This project was designed as a hands-on practice to gain familiarity with RNA-seq data analysis in R and to develop skills in both coding and biological interpretation.
+This project was intended to be a practical exercise to become familiar with RNA-seq data analysis in R and to develop skills in both coding and biological interpretation.
 
-The main biological question addressed in this study is:
-**How does infection with Francisella tularensis affect gene expression levels in the human monocytic cell line THP-1?**
+The main biological question being asked in this study is:
+**What is the effect of Francisella tularensis infection on gene expression levels in the human monocytic cell line THP-1?**
 
-THP-1 cells are derived from patients with acute monocytic leukemia and are commonly used as a model for studying immune responses in monocytes.
+The THP-1 cell line is derived from patients with acute monocytic leukemia and is widely used as a model system to study immune responses in monocytes.
 
 # **Dataset**
-The RNA-seq dataset used in this project was obtained from the NCBI Gene Expression Omnibus (GEO):
+The RNA-seq dataset used in this project was downloaded from the NCBI Gene Expression Omnibus (GEO) database:
 
 - Accession number: GSE306199
 - Organism: Homo sapiens
@@ -17,55 +17,37 @@ The RNA-seq dataset used in this project was obtained from the NCBI Gene Express
 # Experimental conditions:
 - Infected vs Uninfected
 - Treated with Dillapiole vs Vehicle control
-
-This results in four experimental groups (n=5 per group):
+  
+This gives a total of four experimental groups (n=5 per group):
 - Uninfected + Vehicle
 - Uninfected + Dillapiole
 - Infected + Vehicle
 - Infected + Dillapiole
 
 # Methods (Overview)
-A raw count matrix was generated from the dataset and used as input for differential expression analysis using the DESeq2 package in R.
-Gene identifiers were retained while sample name columns were excluded to meet DESeq2 input requirements.
+A raw count matrix was created from the dataset and used as input for differential expression analysis using the DESeq2 package in R.
+Gene identifiers were kept while sample name columns were removed to conform to the DESeq2 input format.
 
-A metadata table was manually constructed containing experimental information for each sample.
-Column names of the count matrix were matched to row names of the metadata to ensure consistency.
+A metadata table was manually constructed with experimental information for each sample.
+The column names of the count matrix were matched to row names of the metadata to ensure consistency.
 
 Reference levels were defined as:
 - Uninfected for infection status
 - Vehicle for treatment condition
 
-This allowed all other conditions to be interpreted relative to the baseline (no infection, no treatment).
-
-Lowly expressed genes were filtered out by removing genes with fewer than 10 total counts across all samples.
-
-Differential expression analysis was performed using DESeq2, followed by variance stabilizing transformation (VST) for downstream visualization and exploratory analysis.
+This allowed all other conditions to be interpreted relative to the baseline (no infection, no treatment). Lowly expressed genes were filtered out by removing genes with fewer than 10 total counts across all samples. Differential expression analysis was performed using DESeq2, followed by variance stabilizing transformation (VST) for downstream visualization and exploratory analysis.
 
 # Plot analysis
 1. **Scatter plot** 
 
 The dispersion plot shows the expected strong negative relationship between mean normalized counts and dispersion estimates, which is characteristic of well-behaved RNA-seq data under the negative binomial model.
-Genes with low mean expression (left side of the plot) exhibit high dispersion (overdispersion), resulting in greater scatter of the gene-wise estimates (black points). As mean expression increases (moving right), dispersion decreases markedly, reflecting lower relative variability in highly expressed genes.
-The fitted dispersion trend (red line) captures this relationship well, passing centrally through the cloud of points across the entire expression range.
-Final shrunk dispersion estimates (blue points) closely follow the fitted trend, indicating appropriate and effective shrinkage, particularly beneficial for low-count genes where raw estimates are noisy. No severe dispersion outliers are apparent, suggesting the absence of major technical artifacts, contamination, or genes with unexplained extreme variability.
-Overall, the dispersion estimation appears reliable, supporting confidence in the subsequent differential expression results (p-values and log2 fold changes). 
+The genes with low mean expression levels (left side of the graph) show high dispersion, leading to high scatter of gene-specific estimates (black dots). With increasing mean expression levels, the dispersion reduces significantly, indicating low relative variability for highly expressed genes. The fitted dispersion curve (red line) captures this pattern well, passing through the middle of the cloud of points across the entire expression range. The final shrunk dispersion estimates (blue dots) lie very close to the fitted curve, indicating proper and effective shrinkage. This is especially helpful for low-count genes, for which the raw estimates are noisy. There do not appear to be any serious dispersion outliers, indicating the absence of significant technical artifacts, contamination, or genes with unexplained extreme variability. The dispersion estimation procedure appears to be trustworthy, and this helps build confidence in the subsequent differential expression analysis, such as p-values and log2 fold changes.  
 
 ![Scatter plot](plots/dispersion_plot.png) 
 
 
-
-
-
-
-
 2. **PCA plot**
-PC1 and PC2 explain **53%** and **27%** of the total variance, respectively. Together, PC1 and PC2 capture **~80%** of the variation in the dataset, providing a highly representative 2D summary of the data.
-
-
-
-
-
-
+PC1 and PC2 explain 53% and 27% of the total variance, respectively. PC1 and PC2 together explain ~80% of the total variance, providing a highly representative 2D summary of the data.
 
 
 
@@ -74,28 +56,17 @@ PC1 and PC2 explain **53%** and **27%** of the total variance, respectively. Tog
 The MA plot visualizes the relationship between mean normalized expression (baseMean, x-axis) and log2 fold change (y-axis) for the contrast Infected_Vehicle vs Uninfected_Vehicle, using shrunk log2 fold changes.
 
 **MA Plot: Infected vs Uninfected (Vehicle)**
-Key observations:
-- Most genes cluster tightly around log2FC = 0 (gray band), as expected: the majority of genes do not show substantial expression changes under infection, reflecting stable housekeeping and baseline functions.
-- A clear subset of genes exhibits strong differential expression, with log2FC values ranging up to ~+7 (upregulation) and down to ~-4 (downregulation). These extremes are biologically plausible in the context of a robust innate immune response to *Francisella tularensis* infection in THP-1 cells, where activation of inflammatory and antiviral pathways (such as NF-κB, cytokine, and interferon signaling) can drive large fold changes in key effector genes.
-- Low-expressed genes (left side of the plot) show greater scatter in log2FC, which is typical due to higher relative variability (Poisson-like sampling noise + biological overdispersion) in lowly expressed transcripts.
-- Highly expressed genes (right side) display much tighter fold changes, consistent with the behavior of stable housekeeping genes (such as ribosomal, actin, GAPDH) that are less responsive to infection.
 
-The y-axis range was set to [-6, 8] to fully capture the observed fold changes without excessive empty space, while preserving detail across the expression spectrum. 
-This pattern aligns with expectations for a strong biological perturbation (infection) and supports the validity of the differential expression results.  
+Key observations:
+Most genes are tightly grouped around log2FC = 0 (the gray area), as expected. This indicates that most genes do not display significant changes in expression levels during infection, consistent with stable housekeeping and baseline activities.
+
+- There is a distinct group of genes that display strong differential expression, with log2FC values extending from ~+7 (upregulated) to ~-4 (downregulated). These values are biologically consistent in the context of a strong innate immune response to Francisella tularensis infection in THP-1 cells. In this scenario, the activation of inflammatory and antiviral response pathways, such as NF-κB, cytokine, and interferon responses, may mediate strong fold changes in key effector genes.
+- The lowly expressed genes (left side of the plot) display more variability in log2FC, which is expected because of greater relative variability in lowly expressed genes.
+- The highly expressed genes (right side of the plot) display much more compact fold changes, as expected for stable housekeeping genes such as ribosomal genes, actin, or GAPDH, which are less responsive to infection.
+
+The y-axis was scaled to [-6, 8] to display the fold changes without too much empty space, while maintaining sufficient detail across the expression profile. This is consistent with a strong biological response and helps validate the results.
 
 ![MA plot, Vehicle](https://github.com/niktaghanei/differential-gene-expression-analysis/blob/main/plots/ma%20plots/vehicle_MA_edited.png)
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
