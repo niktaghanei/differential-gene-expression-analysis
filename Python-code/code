@@ -1,1 +1,145 @@
-a
+import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
+import gseapy as gp
+from gseapy import barplot
+import seaborn as sns
+
+
+read = pd.read_csv("deseq_output_with_names.csv")
+
+read_cleaned = read.dropna(subset=['padj']).copy()
+ptint(read_cleaned)
+
+print(f'cleaned: {len(read_cleaned)}')
+print(f'original: {len(read)}')
+
+print(read_cleaned['log2FoldChange'].describe())
+
+read_cleaned['-log10_padj'] = -np.log10(read_cleaned['padj'])
+
+up = (read_cleaned['log2FoldChange'] > 1) & (read_cleaned['-log10_padj'] > 1.3) 
+down = (read_cleaned['log2FoldChange'] < -1) & (read_cleaned['-log10_padj'] > 1.3)
+
+
+
+names = gp.get_library_name()
+len(names)
+go_names = [n for n in names if 'GO' in n and '20' in n]
+print(go_names)
+
+up_regulated = list(read_cleaned[up]['symbol'].dropna())
+len(up_regulated)
+
+enrich_up = gp.enrichr(gene_list=up_regulated,
+                    gene_sets=['GO_Biological_Process_2025'],
+                    organism='human',
+                    outdir=None)
+
+res_up = enrich_up.results
+res_up['-log10_padj'] = -np.log10(res_up['Adjusted P-value'])
+
+save = res_up.sort_values(by=['Adjusted P-value', 'Combined Score'], ascending=[True, False])
+save.to_csv('enrichment results GSE306199.xlsx', index=False, encoding='utf-8-sig')
+
+top_15_up = res_up.sort_values(by=['Adjusted P-value', 'Combined Score'], ascending=[True, False]).head(15)
+
+# 15 top up-regulated pathways, barplot
+plt.figure(figsize=(12, 8))
+sns.set_style('whitegrid')
+
+ax = sns.barplot(
+    data=top_15_up,
+    x='-log10_padj',
+    y='Term',
+    hue='Combined Score',
+    palette='viridis',
+    dodge=False
+)
+
+plt.title('Top 15 Enriched Pathways', fontsize=15)
+plt.xlabel('-log10(adjusted p-value)', fontsize=12)
+plt.ylabel('')
+plt.tight_layout()
+plt.show()
+
+top_15_up['gene_count'] = top_15_up['Overlap'].str.split('/').str[0].astype(int)
+
+
+# 15 top up-regulated, dot plot
+plt.figure(figsize=(12, 8))
+scatter_plot = sns.scatterplot(
+    data=top_15_up,
+    x='-log10_padj',
+    y='Term',
+    size='gene_count',
+    hue='Combined Score',
+    sizes=(100, 600),
+    palette='magma',
+    edgecolor='black'
+)
+
+plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+plt.title('Top 15, dot plot')
+plt.xlabel('-log10(adjusted p-value)', fontsize=13)
+plt.grid(True, linestyle='--', alpha=0.6)
+plt.tight_layout()
+plt.show()
+
+
+
+# down-regulated pathways
+down_regulated = read_cleaned[down]['symbol'].dropna()
+len(down_regulated)
+
+enrich_down = gp.enrichr(
+    gene_list=down_regulated,
+    gene_sets=['GO_Biological_Process_2025'],
+    organism='human',
+    outdir=None
+)
+
+res_down = enrich_down.results
+res_down['-log10_padj'] = -np.log10(res_down['Adjusted P-value'])
+
+top_15_down = res_down.sort_values(by=['Adjusted P-value', 'Combined Score'], ascending=[True, False]).head(15)
+
+# 15 top down-regulated pathways, bar plot
+plt.figure(figsize=(12, 8))
+sns.set_style('whitegrid')
+
+ax = sns.barplot(
+    data=top_15_down,
+    x='-log10_padj',
+    y='Term',
+    hue='Combined Score',
+    palette='mako',
+)
+
+plt.title('Top 15 Enriched Pathways', fontsize=15)
+plt.xlabel('-log10(adjusted p-value)', fontsize=12)
+plt.ylabel('')
+plt.tight_layout()
+plt.show()
+
+# 15 top down-regulated pathways, dot plot
+top_15_down['gene_count'] = top_15_down['Overlap'].str.split('/').str[0].astype(int)
+
+plt.figure(figsize=(12, 8))
+down_scatter_plot = sns.scatterplot(
+    data=top_15_down,
+    x='-log10_padj',
+    y='Term',
+    size='gene_count',
+    hue='Combined Score',
+    sizes=(100, 600),
+    palette='magma',
+    edgecolor='black'
+)
+
+plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+plt.title('Top 15, dot plot')
+plt.xlabel('-log10(adjusted p-value)', fontsize=13)
+plt.grid(True, linestyle='--', alpha=0.6)
+plt.tight_layout()
+plt.show()
