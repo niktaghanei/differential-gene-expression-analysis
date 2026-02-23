@@ -407,3 +407,18 @@ When combined (Infected + Dillapiole), the profile was significantly different:
 
 These findings indicate that dillapiole has a positive effect on F. tularensis infection. It does not only contribute its own effects but also modulates the infection by reducing the bacterial virulence, making it less aggressive and more manageable for the host. Rather than causing a massive immune response, the cells react in a more composed manner, which is consistent with the drug’s mechanism of suppressing the key virulence genes of the bacterium.
 In conclusion, this analysis proves that dillapiole is a virulence modulator and not a direct killer or suppressor of the host immune system. The project was able to successfully integrate computational analysis and biological interpretation to give a clear understanding of how this natural compound affects the host-pathogen interaction at the transcriptional level.
+
+
+
+## Phase 2: Functional Enrichment Analysis (Python Integration)
+​After finishing the Differential Expression Analysis in R, I chose to shift to Python for the Functional Enrichment Analysis.
+​Rationale for Switching to Python
+​In an actual research setting, bioinformatics analysis may need to switch between different programming languages to leverage the most efficient tools for a given task. The reason I chose to shift this phase to Python was two-fold:
+​Technical Challenge: I aimed to test my programming abilities by handling a "cross-talk" between R and Python, allowing for seamless data transfer between the two platforms.
+​Efficiency and Visualization: By taking advantage of the data science capabilities of Python, particularly the use of Pandas for data manipulation and visualization with Seaborn/Matplotlib for custom plots, I was able to produce high-quality, publication-ready figures for biological interpretation.
+​Workflow
+​Data Transition: The substantial Gene Results (DEGs) obtained from DESeq2 were exported as CSV files.
+​Data Processing: Employed Pandas and NumPy for filtering and processing gene lists for enrichment.
+​Gene Ontology (GO) & Pathway Analysis: Conducted functional analysis to determine the biological processes, molecular functions, and cellular components that are most impacted by Dillapiole and infection.
+​Visualization: Used Seaborn and Matplotlib to create dot plots and bar charts of the top enriched terms to provide a "big picture" view of the biological story.
+
